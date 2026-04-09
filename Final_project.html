@@ -1,0 +1,2947 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melkar Builders – Panemangalore</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --navy: #07111e;
+      --navy2: #0c1c2e;
+      --navy3: #112338;
+      --teal: #2eb87a;
+      --teal2: #4dcf97;
+      --teal-glow: rgba(46, 184, 122, 0.15);
+      --teal-pale: rgba(46, 184, 122, 0.08);
+      --cream: #f5f7f9;
+      --cream2: #edf0f4;
+      --text: #18283a;
+      --muted: #6b87a4;
+      --white: #ffffff;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 24px rgba(7, 17, 30, 0.08);
+      --shadow-lg: 0 16px 56px rgba(7, 17, 30, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 75px;
+      /* background: #07111e; */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: height 0.3s, background 0.3s, box-shadow 0.3s;
+      background-color: white;
+  
+    }
+
+    nav.scrolled {
+      height: 100px;
+      background: rgba(7, 17, 30, 0.98);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4);
+      background-color: rgb(254, 254, 254);
+      
+    }
+
+    .nav-logo {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links>li {
+      position: relative;
+    }
+
+    .nav-links>li>a,
+    .nav-links>li>.nav-span {
+      /* color: rgba(255, 255, 255, 0.5); */
+      color: black;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 6px;
+
+    }
+
+    .nav-links>li>a:hover,
+    .nav-links>li>.nav-span:hover {
+      color: rgba(0, 0, 0, 0.9);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links>li>a.active {
+      color: var(--teal);
+      background: rgba(61, 191, 138, 0.08);
+    }
+
+    /* Active underline */
+    .nav-links>li>a::after {
+      content: "";
+      position: absolute;
+      bottom: 2px;
+      left: 16px;
+      right: 16px;
+      height: 1.5px;
+      background: var(--teal);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links>li>a.active::after {
+      transform: scaleX(1);
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-arrow {
+      font-size: 0.45rem;
+      transition: transform 0.3s;
+      opacity: 0.45;
+      display: inline-block;
+    }
+
+    .dropdown:hover .dropdown-arrow {
+      transform: rotate(180deg);
+      opacity: 0.8;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding-top: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .dropdown-menu-inner {
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      min-width: 186px;
+      padding: 5px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(255, 255, 255, 0.04);
+    }
+
+    /* Invisible bridge prevents hover gap */
+    .dropdown-menu::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -16px;
+      right: -16px;
+      height: 10px;
+      background: transparent;
+    }
+
+    .dropdown:hover .dropdown-menu,
+    .dropdown-menu:hover {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .dropdown-menu-inner a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      color: rgba(0, 0, 0) !important;
+      font-size: 0.72rem !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.15s;
+      cursor: pointer;
+      border-radius: 7px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 500;
+    }
+
+    .dropdown-menu-inner a:hover {
+      background: rgba(61, 191, 138, 0.1);
+      color: var(--teal) !important;
+    }
+
+    .dm-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dm-dot.ongoing {
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal);
+      animation: dotpulse 2s infinite;
+    }
+
+    @keyframes dotpulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    .nav-cta {
+      background: var(--teal) !important;
+      color: #07111e !important;
+      font-weight: 700 !important;
+      padding: 8px 20px !important;
+      border-radius: 7px !important;
+      letter-spacing: 0.08em !important;
+      font-size: 0.7rem !important;
+      box-shadow: 0 2px 12px rgba(61, 191, 138, 0.2);
+      margin-left: 8px;
+      transition: all 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--teal2) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 20px rgba(61, 191, 138, 0.35) !important;
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 400;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #07111e;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ─── SHARED ─── */
+    .pt-nav {
+      padding-top: 76px;
+    }
+
+    .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+
+    .h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .h2.light {
+      color: var(--white);
+    }
+
+    .btn {
+      background: var(--teal);
+      color: var(--navy);
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(61, 191, 138, 0.25);
+    }
+
+    .btn:hover {
+      background: var(--teal2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(61, 191, 138, 0.4);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.75);
+      font-family: "Outfit", sans-serif;
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      border-radius: 8px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      font-family: "Outfit", sans-serif;
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border: 1.5px solid rgba(13, 31, 53, 0.18);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s;
+      border-radius: 8px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      background: var(--navy);
+      padding: 140px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(61, 191, 138, 0.08) 0%, transparent 60%);
+    }
+
+    .page-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(61, 191, 138, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 191, 138, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+
+    .page-hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .page-hero h1 em {
+      color: var(--teal);
+      font-style: italic;
+    }
+
+    .page-hero p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.45);
+      max-width: 520px;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      height: 100vh;
+      min-height: 640px;
+      background: var(--navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 65% 40%, rgba(61, 191, 138, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 80%, rgba(23, 48, 79, 0.8) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(61, 191, 138, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 191, 138, 0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    .hero-shape {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 580px;
+      height: 580px;
+      border-radius: 50%;
+      border: 1px solid rgba(61, 191, 138, 0.08);
+      pointer-events: none;
+    }
+
+    .hero-shape::before {
+      content: "";
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(61, 191, 138, 0.06);
+    }
+
+    .hero-shape::after {
+      content: "";
+      position: absolute;
+      inset: 100px;
+      border-radius: 50%;
+      background: rgba(61, 191, 138, 0.04);
+      border: 1px solid rgba(61, 191, 138, 0.08);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 60px;
+      max-width: 760px;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(61, 191, 138, 0.1);
+      border: 1px solid rgba(61, 191, 138, 0.2);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 28px;
+      font-weight: 600;
+    }
+
+    .hero-eyebrow span {
+      width: 6px;
+      height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
+    }
+
+    .hero-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3.2rem, 7vw, 5.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero-title em {
+      color: var(--teal);
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 500px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(9, 18, 32, 0.8);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(61, 191, 138, 0.1);
+      display: flex;
+      z-index: 2;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 15px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(61, 191, 138, 0.1);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255,0.7);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ─── STRIP ─── */
+    .home-strip {
+      background: var(--navy2);
+      padding: 0 60px;
+      display: flex;
+    }
+
+    .strip-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 28px 24px;
+      border-right: 1px solid rgba(61, 191, 138, 0.08);
+    }
+
+    .strip-item:last-child {
+      border-right: none;
+    }
+  .strip-icon i{ 
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      background: var(--teal-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(61, 191, 138, 0.15);
+      color: rgb(255, 255, 255);
+}
+
+    .strip-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .strip-sub {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 2px;
+    }
+
+    /* ─── HOME ABOUT ─── */
+    .home-about {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      background: var(--cream);
+    }
+
+    .about-img-block {
+      position: relative;
+    }
+
+    .about-img-box {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-img-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(61, 191, 138, 0.05), transparent);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 48px rgba(61, 191, 138, 0.4);
+      border: 4px solid var(--cream);
+    }
+
+    .about-badge-n {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .about-badge-t {
+      font-size: 0.48rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(13, 31, 53, 0.6);
+      text-align: center;
+      padding: 0 8px;
+      margin-top: 2px;
+    }
+
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #4a6070;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .about-feats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .af {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      padding: 14px 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(13, 31, 53, 0.06);
+      border: 1px solid rgba(13, 31, 53, 0.06);
+    }
+
+    .af-icon img{
+      width: 30x;
+      height: 30px;
+      min-width: 34px;
+      background: var(--teal-pale);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .af-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ─── PAGE SECTIONS ─── */
+    .about-story {
+      padding: 90px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      background: var(--cream);
+    }
+
+    .story-text p {
+      font-size: 0.95rem;
+      line-height: 1.95;
+      color: #4a6070;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .story-text blockquote {
+      border-left: 3px solid var(--teal);
+      padding: 20px 24px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--navy);
+      margin: 28px 0;
+      line-height: 1.6;
+      background: rgba(61, 191, 138, 0.04);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .story-visual {
+      position: sticky;
+      top: 100px;
+    }
+
+    .story-card {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 32px 28px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(61, 191, 138, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .story-card-num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+      min-width: 80px;
+    }
+
+    .story-card-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .about-values {
+      background: var(--navy);
+      padding: 90px 60px;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 52px;
+    }
+
+    .value-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(61, 191, 138, 0.1);
+      padding: 36px 28px;
+      border-radius: 14px;
+      transition: all 0.3s;
+    }
+
+    .value-card:hover {
+      background: rgba(61, 191, 138, 0.07);
+      border-color: rgba(61, 191, 138, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    }
+
+    .value-icon i {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  background: var(--teal-pale);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(61, 191, 138, 0.15);
+  color: white;
+}
+
+
+    .value-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .value-desc {
+      font-size: 0.84rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+    }
+
+    .about-team {
+      padding: 90px 60px;
+      background: var(--cream2);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .team-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(13, 31, 53, 0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--navy), var(--navy3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .team-info {
+      padding: 22px 20px;
+    }
+
+    .team-name {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .team-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* ─── SERVICES ─── */
+    .services-intro {
+      padding: 80px 60px 0;
+      background: var(--cream);
+    }
+
+    .services-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      padding-bottom: 70px;
+      border-bottom: 1px solid rgba(13, 31, 53, 0.08);
+    }
+
+    .si-text p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #4a6070;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .si-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .si-stat {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 28px 24px;
+      text-align: center;
+      border: 1px solid rgba(61, 191, 138, 0.1);
+    }
+
+    .si-stat-n {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .si-stat-l {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .services-list {
+      padding: 70px 60px;
+      background: var(--cream);
+    }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 60px;
+      gap: 28px;
+      align-items: center;
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(13, 31, 53, 0.07);
+      transition: background 0.2s;
+    }
+
+    .service-row:first-child {
+      border-top: 1px solid rgba(13, 31, 53, 0.07);
+    }
+
+    .service-row:hover {
+      background: rgba(61, 191, 138, 0.03);
+      margin: 0 -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 12px;
+    }
+
+    .sr-num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: rgba(13, 31, 53, 0.1);
+      transition: color 0.3s;
+      line-height: 1;
+    }
+
+    .service-row:hover .sr-num {
+      color: var(--teal);
+    }
+
+    .sr-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .sr-desc {
+      font-size: 0.87rem;
+      line-height: 1.8;
+      color: #4a6070;
+      max-width: 600px;
+      font-weight: 300;
+    }
+
+    .sr-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sr-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border: 1px solid rgba(61, 191, 138, 0.3);
+      color: var(--teal);
+      border-radius: 50px;
+      font-weight: 500;
+    }
+
+    .sr-icon {
+      font-size: 2.2rem;
+      opacity: 0.35;
+      text-align: center;
+    }
+
+    .services-process {
+      background: var(--navy);
+      padding: 90px 60px;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 52px;
+    }
+
+    .process-step {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(61, 191, 138, 0.1);
+      padding: 36px 24px;
+      border-radius: 14px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-step:hover {
+      background: rgba(61, 191, 138, 0.07);
+      border-color: rgba(61, 191, 138, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .process-step::after {
+      content: attr(data-num);
+      position: absolute;
+      bottom: -10px;
+      right: 10px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 5rem;
+      font-weight: 700;
+      color: rgba(61, 191, 138, 0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .ps-icon i{
+      color: white;
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .ps-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .ps-desc {
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 300;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-filter-bar {
+      background: var(--cream);
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(13, 31, 53, 0.08);
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.64rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 6px;
+      font-weight: 600;
+    }
+
+    .filter-chip {
+      background: var(--white);
+      border: 1.5px solid rgba(13, 31, 53, 0.1);
+      color: var(--muted);
+      font-family: "Outfit", sans-serif;
+      font-size: 0.74rem;
+      padding: 7px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+
+    .filter-chip:hover,
+    .filter-chip.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: var(--navy);
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(61, 191, 138, 0.3);
+    }
+
+    .projects-main-grid {
+      padding: 52px 60px;
+      background: var(--cream);
+    }
+
+    .pmg-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .status-pill {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+    }
+
+    .pill-ongoing {
+      background: rgba(61, 191, 138, 0.12);
+      color: var(--teal);
+      border: 1px solid rgba(61, 191, 138, 0.25);
+    }
+
+    .projects-cards {
+      margin-bottom: 32px;
+    }
+
+    .proj-card {
+      background: var(--navy);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .proj-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .proj-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .proj-card:hover .proj-img img {
+      transform: scale(1.04);
+    }
+
+    .proj-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 20, 35, 0.95) 0%, rgba(10, 20, 35, 0.3) 50%, transparent 100%);
+    }
+
+    .proj-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px 32px;
+    }
+
+    .proj-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .proj-name {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .proj-loc {
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .proj-detail-box {
+      background: var(--navy);
+      border-radius: 16px;
+      padding: 48px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(61, 191, 138, 0.1);
+    }
+
+    .proj-detail-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .proj-detail-inner p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .proj-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .proj-spec {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 3px solid var(--teal);
+    }
+
+    .proj-spec-l {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .proj-spec-v {
+      font-size: 0.88rem;
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    /* Map */
+    .proj-map-section {
+      background: var(--navy);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid rgba(61, 191, 138, 0.1);
+    }
+
+    .proj-map-header {
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid rgba(61, 191, 138, 0.08);
+    }
+
+    .proj-map-header h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .proj-map-header p {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.38);
+      font-weight: 300;
+    }
+
+    .proj-map-img {
+      width: 100%;
+      max-height: 480px;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      background: #fff;
+      padding: 20px;
+    }
+
+    /* ─── WHY ─── */
+    .why-reasons {
+      padding: 90px 60px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .reason-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(13, 31, 53, 0.07);
+      transition: background 0.2s;
+    }
+
+    .reason-item:first-child {
+      padding-top: 0;
+    }
+
+    .reason-item:last-child {
+      border-bottom: none;
+    }
+
+    .r-num {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgba(13, 31, 53, 0.12);
+      min-width: 28px;
+      margin-top: 2px;
+      transition: color 0.2s;
+    }
+
+    .reason-item:hover .r-num {
+      color: var(--teal);
+    }
+
+    .r-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+      margin-bottom: 7px;
+      color: var(--navy);
+    }
+
+    .r-desc {
+      font-size: 0.86rem;
+      line-height: 1.8;
+      color: #4a6070;
+      font-weight: 300;
+    }
+
+    .why-boxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      position: sticky;
+      top: 100px;
+      align-content: start;
+    }
+
+    .why-box {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 32px 22px;
+      text-align: center;
+      border: 1px solid rgba(61, 191, 138, 0.1);
+      transition: all 0.3s;
+    }
+
+    .why-box:hover {
+      border-color: var(--teal);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(13, 31, 53, 0.15);
+    }
+
+    .why-box:nth-child(even) {
+      margin-top: 18px;
+    }
+
+    .wb-n {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .wb-l {
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .why-testimonials {
+      background: var(--navy);
+      padding: 90px 60px;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 48px;
+    }
+
+    .testi-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(61, 191, 138, 0.1);
+      border-radius: 14px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+
+    .testi-card:hover {
+      background: rgba(61, 191, 138, 0.06);
+      border-color: rgba(61, 191, 138, 0.22);
+      transform: translateY(-4px);
+    }
+
+    .testi-stars {
+      color: var(--teal);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    .testi-text {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 18px;
+    }
+
+    .testi-author {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .testi-loc {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.22);
+      margin-top: 3px;
+    }
+
+    /* ─── ENQUIRY ─── */
+    .enquiry-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      min-height: calc(100vh - 76px);
+    }
+
+    .enq-left {
+      background: var(--navy);
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .enq-left p {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 300;
+    }
+
+    .enq-contacts {
+      margin-top: 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .ec-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ec-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: var(--teal-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      border: 1px solid rgba(61, 191, 138, 0.15);
+    }
+
+    .ec-lbl {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.26);
+      font-weight: 600;
+    }
+
+    .ec-val {
+      font-size: 0.92rem;
+      color: var(--white);
+      margin-top: 3px;
+    }
+
+    .enq-right {
+      background: var(--cream);
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-head {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--white);
+      border: 1.5px solid rgba(13, 31, 53, 0.12);
+      color: var(--text);
+      font-family: "Outfit", sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(61, 191, 138, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--teal);
+      color: var(--navy);
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(61, 191, 138, 0.25);
+    }
+
+    .btn-submit:hover {
+      background: var(--teal2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(61, 191, 138, 0.4);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #070f1c;
+      padding: 64px 60px 28px;
+      border-top: 1px solid rgba(61, 191, 138, 0.08);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    .footer-logo img {
+      height: 100px;
+      width: auto;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .footer-brand-tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.82rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255);
+      max-width: 260px;
+      font-weight: 300;
+    }
+
+    .footer-col-title {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      font-size: 0.83rem;
+      transition: color 0.2s;
+      cursor: pointer;
+      font-weight: 300;
+    }
+
+    .footer-links a:hover {
+      color: var(--teal);
+    }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-contact-list li {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255);
+      display: flex;
+      gap: 10px;
+      font-weight: 300;
+    }
+
+    .footer-contact-list span {
+      color: var(--teal);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--teal);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 14px 24px;
+      border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(61, 191, 138, 0.4);
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.4s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MOBILE ─── */
+    /* ── TABLET ≤960px ─────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav {
+        padding: 0 24px;
+        height: 64px;
+        background: #ffffff;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+      }
+      .nav-logo img { height: 52px; width: auto; }
+      .nav-links    { display: none; }
+      .hamburger    { display: flex; }
+      .hamburger span { background: #07111e !important; }
+
+      .hero-content { padding: 80px 24px 0; max-width: 100%; }
+      .hero-title   { font-size: clamp(2.2rem, 6vw, 3.5rem); }
+      .hero-stats   { position: relative; bottom: auto; flex-wrap: wrap; }
+      .hero-stats .stat-item {
+        padding: 16px 14px; flex: 1 1 45%;
+        border-right: none;
+        border-bottom: 1px solid rgba(61,191,138,0.08);
+      }
+
+      .home-strip  { flex-direction: column; padding: 0 24px; }
+      .strip-item  { border-right: none; border-bottom: 1px solid rgba(61,191,138,0.08); }
+
+      .home-about      { grid-template-columns: 1fr; padding: 60px 24px; gap: 36px; }
+      .about-img-block { display: none; }
+      .about-feats     { grid-template-columns: 1fr 1fr; }
+
+      .page-hero    { padding: 100px 24px 56px; }
+      .page-hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+
+      .about-story  { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      .story-visual { display: none; }
+      .values-grid  { grid-template-columns: repeat(2,1fr); }
+      .team-grid    { grid-template-columns: repeat(2,1fr); }
+      .about-team, .about-values, .services-process { padding: 60px 24px; }
+
+      .services-intro      { padding: 60px 24px 0; }
+      .services-intro-grid { grid-template-columns: 1fr; gap: 36px; }
+      .si-stats            { grid-template-columns: repeat(2,1fr); }
+      .services-list       { padding: 50px 24px; }
+      .service-row         { grid-template-columns: 55px 1fr; }
+      .sr-icon             { display: none; }
+      .process-steps       { grid-template-columns: 1fr 1fr; }
+
+      .projects-filter-bar,
+      .projects-main-grid { padding: 24px; }
+      .proj-detail-inner  { grid-template-columns: 1fr; }
+      .proj-detail-box    { padding: 24px; border-radius: 12px; }
+      .proj-map-section   { border-radius: 12px; }
+      .proj-specs         { grid-template-columns: 1fr 1fr; }
+
+      .why-reasons      { grid-template-columns: 1fr; padding: 60px 24px; }
+      .why-boxes        { display: none; }
+      .why-testimonials { padding: 60px 24px; }
+      .testi-grid       { grid-template-columns: repeat(2,1fr); }
+
+      .enquiry-layout { grid-template-columns: 1fr; }
+      .enq-left       { padding: 80px 24px 40px; }
+      .enq-right      { padding: 40px 24px 60px; }
+      .form-row       { grid-template-columns: 1fr; }
+
+      footer      { padding: 48px 24px 24px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+      #navLinks li            { border-bottom: 1px solid rgba(255,255,255,0.06); }
+      #navLinks li:last-child { border-bottom: none; }
+      #navLinks li a,
+      #navLinks li .nav-span  {
+        padding: 14px 0 !important;
+        font-size: 0.9rem !important;
+        display: block !important;
+        width: 100%;
+        color: rgba(255,255,255,0.85) !important;
+      }
+      #navLinks .dropdown-menu {
+        position: static !important; opacity: 1 !important;
+        pointer-events: all !important; padding-top: 0 !important;
+        transform: none !important;
+      }
+      #navLinks .dropdown-menu-inner {
+        background: rgba(255,255,255,0.04);
+        border: none; border-radius: 0; padding: 0;
+        box-shadow: none; min-width: unset;
+      }
+      #navLinks .dropdown-menu-inner a { padding: 12px 16px !important; border-radius: 0; }
+    }
+
+    /* ── MOBILE ≤480px ───────────────────────────────────── */
+    @media (max-width: 480px) {
+      nav { padding: 0 16px; height: 60px; background: #ffffff; }
+      .nav-logo img { height: 44px; }
+
+      #hero         { min-height: 100svh; }
+      .hero-content { padding: 72px 16px 0; }
+      .hero-title   { font-size: clamp(1.9rem, 8.5vw, 2.6rem); line-height: 1.1; }
+      .hero-desc    { font-size: 0.88rem; margin-bottom: 24px; }
+      .hero-eyebrow { font-size: 0.58rem; padding: 5px 10px; }
+      .hero-btns    { flex-direction: column; gap: 10px; }
+      .hero-btns .btn,
+      .hero-btns .btn-ghost { width: 100%; text-align: center; justify-content: center; }
+      .hero-stats .stat-item { flex: 1 1 100%; padding: 12px 16px; }
+      .stat-num   { font-size: 1.5rem; }
+      .stat-label { font-size: 0.65rem; }
+
+      .home-strip { padding: 0 16px; }
+      .strip-item { padding: 18px 0; }
+
+      .home-about       { padding: 48px 16px; gap: 28px; }
+      .page-hero        { padding: 88px 16px 44px; }
+      .page-hero h1     { font-size: clamp(1.7rem, 7.5vw, 2.2rem); }
+      .about-story      { padding: 48px 16px; gap: 28px; }
+      .about-team,
+      .about-values,
+      .services-process { padding: 48px 16px; }
+      .services-intro   { padding: 48px 16px 0; }
+      .services-list    { padding: 40px 16px; }
+      .why-reasons      { padding: 48px 16px; }
+      .why-testimonials { padding: 48px 16px; }
+      .projects-filter-bar,
+      .projects-main-grid { padding: 16px; }
+
+      .h2          { font-size: clamp(1.5rem, 6vw, 2rem); }
+      .about-feats { grid-template-columns: 1fr; gap: 8px; }
+      .values-grid { grid-template-columns: 1fr; gap: 10px; }
+      .team-grid   { grid-template-columns: 1fr; gap: 14px; }
+
+      .si-stats      { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .si-stat-n     { font-size: 1.6rem; }
+      .process-steps { grid-template-columns: 1fr; gap: 10px; }
+      .service-row   { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+      .sr-num        { display: none; }
+      .filter-chip   { font-size: 0.68rem; padding: 6px 10px; }
+
+      .proj-detail-box { padding: 16px; }
+      .proj-specs      { grid-template-columns: 1fr; gap: 8px; }
+
+      .testi-grid { grid-template-columns: 1fr; gap: 12px; }
+      .testi-card { padding: 22px 18px; }
+
+      .enq-left  { padding: 60px 16px 28px; }
+      .enq-right { padding: 28px 16px 48px; }
+      .form-group input,
+      .form-group select,
+      .form-group textarea { font-size: 16px !important; }
+      .btn-submit { width: 100%; justify-content: center; font-size: 0.82rem; padding: 14px; }
+
+      footer       { padding: 36px 16px 20px; }
+      .footer-top  { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; font-size: 0.7rem; }
+
+      .toast { left: 16px; right: 16px; bottom: 16px; font-size: 0.82rem; padding: 14px 18px; }
+    }
+
+/* Prevent text selection / accidental editing */
+    body, body * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: default;
+    }
+    /* Keep inputs, textareas and selects usable */
+    input, textarea, select {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+      cursor: text;
+    }
+    /* Keep clickable elements showing pointer */
+    a, button, [onclick], .btn, .btn-ghost, .btn-outline, .btn-submit,
+    .nav-logo, .nav-links li, .hamburger, .filter-chip,
+    .footer-links a, .nav-cta {
+      cursor: pointer !important;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav id="navbar">
+    <div class="nav-logo" onclick="showPage('home')">
+      <img src="LOGO.png" alt="Melkar Builders" style="height: 75px; width: 100px;" />
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a onclick="showPage('home')" id="nav-home">Home</a></li>
+      <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+      <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+      <li><a onclick="showPage('ongoing')" id="nav-ongoing">Projects</a></li>
+      <li><a onclick="showPage('why')" id="nav-why">Why Us</a></li>
+      <li><a onclick="showPage('enquiry')" class="nav-cta" id="nav-enquiry">Enquire Now</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-shape"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow"><span></span>Melkar · Panemangalore · Karnataka</div>
+        <h1 class="hero-title">Building Your<br /><em>Dream Home</em><br />With Integrity</h1>
+        <p class="hero-desc">Melkar Builders crafts exceptional residential and commercial spaces in Panemangalore —
+          where quality construction meets thoughtful design and lasting value.</p>
+        <div class="hero-btns">
+          <a class="btn" onclick="showPage('ongoing')">Explore Projects →</a>
+          <a class="btn-ghost" onclick="showPage('enquiry')">Get Free Quote</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Happy Families</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">On-Time Delivery</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Client Rating</div>
+        </div>
+      </div>
+    </section>
+    <div class="home-strip">
+      <div class="strip-item">
+        <div class="strip-icon"><i class="bi bi-trophy-fill"></i></div>
+        <div>
+          <div class="strip-label">Premium Quality</div>
+          <div class="strip-sub">Certified materials only</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon"><i class="bi bi-clock-fill"></i></div>
+        <div>
+          <div class="strip-label">On-Time Delivery</div>
+          <div class="strip-sub">Every project, every time</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon"><i class="bi bi-gem"></i></div>
+        <div>
+          <div class="strip-label">Luxury Finishes</div>
+          <div class="strip-sub">World-class interiors</div>
+        </div>
+      </div>
+      <div class="strip-item">
+        <div class="strip-icon"><i class="bi bi-piggy-bank-fill"></i></div>
+        <div>
+          <div class="strip-label">Transparent Pricing</div>
+          <div class="strip-sub">No hidden costs</div>
+        </div>
+      </div>
+    </div>
+    <div class="home-about reveal">
+      <div class="about-img-block">
+        <div class="about-img-box"><img src="AlNoor.jpeg" height="850px" width="675px" alt=""></div>
+        <div class="about-badge">
+          <div class="about-badge-n">10+</div>
+          <div class="about-badge-t">Years of Trust</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="eyebrow">About Melkar Builders</div>
+        <h2 class="h2">Crafting Spaces,<br />Creating Legacies</h2>
+        <p>Melkar Builders is a trusted name in construction and real estate, based in Melkar, Panemangalore. We
+          specialize in delivering high-quality residential apartments and commercial spaces that combine superior
+          craftsmanship with modern design.</p>
+        <p>Our commitment is simple — to build homes that our clients are proud to call their own, using the finest
+          construction materials and transparent processes.</p>
+        <div class="about-feats">
+          <div class="af">
+            <div class="af-icon"><i class="bi bi-trophy-fill"></i></div>
+            <div class="af-label">Quality Materials</div>
+          </div>
+          <div class="af">
+            <div class="af-icon"><i class="bi bi-clock-fill"></i></div>
+            <div class="af-label">On-Time Delivery</div>
+          </div>
+          <div class="af">
+            <div class="af-icon"><i class="bi bi-gem"></i></div>
+            <div class="af-label">Luxury Finishes</div>
+          </div>
+          <div class="af">
+            <div class="af-icon"><i class="bi bi-piggy-bank-fill"></i></div>
+            <div class="af-label">Transparent Process</div>
+          </div>
+        </div>
+        <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;">
+          <a class="btn" onclick="showPage('about')">Our Story →</a>
+          <a class="btn-outline" onclick="showPage('services')">Our Services</a>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore delivering quality residential and commercial
+            spaces with integrity.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('services')">Services</a></li>
+            <li><a onclick="showPage('ongoing')">Ongoing Projects</a></li>
+            <li><a onclick="showPage('why')">Why Us</a></li>
+            <li><a onclick="showPage('enquiry')">Enquire Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="page-about" class="page">
+    <div class="page-hero pt-nav">
+      <div class="page-hero-inner">
+        <div class="eyebrow">Our Story</div>
+        <h1>Building <em>Trust</em>,<br />One Home at a Time</h1>
+        <p>Founded on the principles of quality and integrity, Melkar Builders has been transforming lives through
+          exceptional construction in Panemangalore for over a decade.</p>
+      </div>
+    </div>
+    <div class="about-story reveal">
+      <div class="story-text">
+        <div class="eyebrow">Who We Are</div>
+        <h2 class="h2">The Melkar Story</h2>
+        <p>Melkar Builders was born from a simple belief — that everyone deserves a home built with care, quality, and
+          honesty. Founded in Melkar, Panemangalore, we set out to change the way people experience home buying and
+          construction in the coastal Karnataka region.</p>
+        <blockquote>"A home is the greatest investment of your life. We treat it that way."</blockquote>
+        <p>Over the years, we have delivered residential apartments and commercial spaces that stand as testaments to
+          our commitment. Every brick we lay, every beam we raise, carries our promise of excellence.</p>
+        <p>From our humble beginnings to becoming one of the most trusted builders in Panemangalore, our journey has
+          been defined by satisfied families and landmarks that dot the skyline of Melkar.</p>
+        <div style="margin-top:32px;"><a class="btn" onclick="showPage('enquiry')">Start Your Journey →</a></div>
+      </div>
+      <div class="story-visual">
+        <div class="story-card">
+          <div class="story-card-num">10+</div>
+          <div>
+            <div class="story-card-label">Years of Experience</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-num">50+</div>
+          <div>
+            <div class="story-card-label">Families Housed</div>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="story-card-num">100%</div>
+          <div>
+            <div class="story-card-label">On-Time Delivery Record</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-values reveal">
+      <div class="eyebrow">Our Foundation</div>
+      <h2 class="h2 light">What We Stand For</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-trophy-fill"></i></div>
+          <div class="value-title">Quality First</div>
+          <p class="value-desc">We never compromise on materials or craftsmanship. Every project undergoes rigorous
+            quality checks at every stage.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-tags-fill"></i></div>
+          <div class="value-title">Integrity Always</div>
+          <p class="value-desc">Transparent pricing, honest timelines, clear communication — trust is the strongest
+            foundation of any building.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-flower3"></i></div>
+          <div class="value-title">Sustainable Building</div>
+          <p class="value-desc">We adopt eco-friendly construction practices wherever possible, contributing to a
+            greener Panemangalore.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-heart-fill"></i></div>
+          <div class="value-title">Community Care</div>
+          <p class="value-desc">As a local builder, we are deeply invested in the growth and wellbeing of the Melkar
+            community.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-lightbulb-fill"></i></div>
+          <div class="value-title">Innovation</div>
+          <p class="value-desc">From modern designs to smart construction techniques, we stay ahead to deliver
+            future-ready spaces.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-tools"></i></div>
+          <div class="value-title">After-Sales Support</div>
+          <p class="value-desc">Our commitment continues long after project handover with ongoing maintenance guidance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="about-team reveal">
+      <div class="eyebrow">The People</div>
+      <h2 class="h2">Our Leadership Team</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo">👷</div>
+          <div class="team-info">
+            <div class="team-name">Mohammed Riyaz</div>
+            <div class="team-role">Founder & Managing Director</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo">🏗️</div>
+          <div class="team-info">
+            <div class="team-name">Arjun Shetty</div>
+            <div class="team-role">Chief Engineer</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo">📐</div>
+          <div class="team-info">
+            <div class="team-name">Priya Nair</div>
+            <div class="team-role">Head of Design</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore delivering quality spaces with integrity.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Pages</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('services')">Services</a></li>
+            <li><a onclick="showPage('ongoing')">Projects</a></li>
+            <li><a onclick="showPage('why')">Why Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SERVICES -->
+  <div id="page-services" class="page">
+    <div class="page-hero pt-nav">
+      <div class="page-hero-inner">
+        <div class="eyebrow">What We Offer</div>
+        <h1>Our <em>Services</em></h1>
+        <p>From laying the foundation to handing over the keys — we handle every aspect with precision, passion, and
+          professionalism.</p>
+      </div>
+    </div>
+    <div class="services-intro reveal">
+      <div class="services-intro-grid">
+        <div class="si-text">
+          <div class="eyebrow">Our Expertise</div>
+          <h2 class="h2">Built for Life,<br />Designed for You</h2>
+          <p>At Melkar Builders, we offer a comprehensive range of construction and real estate services tailored to the
+            needs of families and businesses in Panemangalore.</p>
+          <p>Whether you're looking for a family apartment or a strategic commercial space, we have the expertise to
+            bring your vision to life.</p>
+        </div>
+        <div class="si-stats">
+          <div class="si-stat">
+            <div class="si-stat-n">10+</div>
+            <div class="si-stat-l">Years Active</div>
+          </div>
+          <div class="si-stat">
+            <div class="si-stat-n">50+</div>
+            <div class="si-stat-l">Projects Done</div>
+          </div>
+          <div class="si-stat">
+            <div class="si-stat-n">100%</div>
+            <div class="si-stat-l">Quality Assured</div>
+          </div>
+          <div class="si-stat">
+            <div class="si-stat-n">5★</div>
+            <div class="si-stat-l">Client Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="services-list reveal">
+      <div class="service-row">
+        <div class="sr-num">01</div>
+        <div>
+          <div class="sr-title">Residential Apartments</div>
+          <p class="sr-desc">Thoughtfully designed apartment complexes offering modern living with premium amenities,
+            quality interiors, and comfortable layouts for families of all sizes.</p>
+          <div class="sr-tags"><span class="sr-tag">2BHK</span><span class="sr-tag">3BHK</span><span
+              class="sr-tag">Luxury</span><span class="sr-tag">Affordable</span></div>
+        </div>
+        <div class="sr-icon">🏢</div>
+      </div>
+      <div class="service-row">
+        <div class="sr-num">02</div>
+        <div>
+          <div class="sr-title">Commercial Spaces</div>
+          <p class="sr-desc">Strategic commercial properties built for business success — retail outlets, office spaces,
+            and mixed-use developments at prime locations in Panemangalore.</p>
+          <div class="sr-tags"><span class="sr-tag">Retail</span><span class="sr-tag">Office</span><span
+              class="sr-tag">Mixed-Use</span></div>
+        </div>
+        <div class="sr-icon">🏬</div>
+      </div>
+      <div class="service-row">
+        <div class="sr-num">03</div>
+        <div>
+          <div class="sr-title">Construction & Contracting</div>
+          <p class="sr-desc">End-to-end construction services from foundation to finishing using only certified
+            materials, experienced labour, and proven techniques.</p>
+          <div class="sr-tags"><span class="sr-tag">Turnkey</span><span class="sr-tag">Contracting</span><span
+              class="sr-tag">Supervision</span></div>
+        </div>
+        <div class="sr-icon">🔨</div>
+      </div>
+      <div class="service-row">
+        <div class="sr-num">04</div>
+        <div>
+          <div class="sr-title">Interior Design</div>
+          <p class="sr-desc">Curated interiors that complement the architecture — blending aesthetics and functionality
+            using quality fittings and contemporary design principles.</p>
+          <div class="sr-tags"><span class="sr-tag">Modular Kitchen</span><span class="sr-tag">Flooring</span><span
+              class="sr-tag">Lighting</span></div>
+        </div>
+        <div class="sr-icon">📐</div>
+      </div>
+    </div>
+    <div class="services-process reveal">
+      <div class="eyebrow">How We Work</div>
+      <h2 class="h2 light">Our Process</h2>
+      <div class="process-steps">
+        <div class="process-step" data-num="01">
+          <div class="ps-icon"><i class="bi bi-chat-dots-fill"></i></div>
+          <div class="ps-title">Consultation</div>
+          <p class="ps-desc">We begin with a detailed consultation to understand your vision, budget, and requirements.
+          </p>
+        </div>
+        <div class="process-step" data-num="02">
+          <div class="ps-icon"><i class="bi bi-book-fill"></i></div>
+          <div class="ps-title">Planning & Design</div>
+          <p class="ps-desc">Our architects craft a detailed plan tailored to your needs and aspirations.</p>
+        </div>
+        <div class="process-step" data-num="03">
+          <div class="ps-icon"><i class="bi bi-cone-striped"></i></div>
+          <div class="ps-title">Construction</div>
+          <p class="ps-desc">Skilled teams execute the plan with strict quality control at every milestone.</p>
+        </div>
+        <div class="process-step" data-num="04">
+          <div class="ps-icon"><i class="bi bi-key-fill"></i></div>
+          <div class="ps-title">Handover</div>
+          <p class="ps-desc">Final inspection, documentation, and handover — your dream home is ready.</p>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Pages</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('about')">About</a></li>
+            <li><a onclick="showPage('ongoing')">Projects</a></li>
+            <li><a onclick="showPage('why')">Why Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ONGOING -->
+  <div id="page-ongoing" class="page">
+    <div class="page-hero pt-nav">
+      <div class="page-hero-inner">
+        <div class="eyebrow" style="color:var(--teal)">Live Projects</div>
+        <h1><em>Ongoing</em> Projects</h1>
+        <p>Currently under construction — future homes and commercial spaces taking shape right now in Panemangalore.
+        </p>
+      </div>
+    </div>
+    <div class="projects-filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">Residential</button>
+      <button class="filter-chip">Commercial</button>
+    </div>
+    <div class="projects-main-grid reveal">
+      <div class="pmg-title">Active Construction <span class="status-pill pill-ongoing">● Ongoing</span></div>
+      <div class="projects-cards">
+        <div class="proj-card">
+          <div class="proj-img">
+            <img src="AlNoor.jpeg" alt="AL NOOR TOWER" />
+          </div>
+          <div class="proj-overlay"></div>
+          <div class="proj-info">
+            <div class="proj-tag">● Ongoing · Flagship · Residential & Commercial</div>
+            <div class="proj-name">AL NOOR TOWER</div>
+            <div class="proj-loc"><i class="bi bi-geo-alt-fill"></i> Melkar, Panemangalore · Luxury Residential & Commercial</div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-detail-box reveal">
+        <div class="proj-detail-inner">
+          <div>
+            <div class="eyebrow">Featured Project</div>
+            <h2 class="h2 light" style="font-size:2rem;">AL NOOR TOWER</h2>
+            <p style="color: rgba(255,255,255,0.7);">A landmark development in Melkar combining luxury residential apartments with premium commercial spaces.
+              Designed to set a new standard for modern living in Panemangalore.</p>
+            <a class="btn" onclick="showPage('enquiry')">Enquire About This Project →</a>
+          </div>
+          <div class="proj-specs">
+            <div class="proj-spec">
+              <div class="proj-spec-l">Location</div>
+              <div class="proj-spec-v">Melkar, Panemangalore</div>
+            </div>
+            <div class="proj-spec">
+              <div class="proj-spec-l">Type</div>
+              <div class="proj-spec-v">Residential + Commercial</div>
+            </div>
+            <div class="proj-spec">
+              <div class="proj-spec-l">Status</div>
+              <div class="proj-spec-v" style="color:var(--teal)">Under Construction</div>
+            </div>
+            <div class="proj-spec">
+              <div class="proj-spec-l">Structure</div>
+              <div class="proj-spec-v">Laterite Masonry</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-map-section reveal">
+        <div class="proj-map-header">
+          <h3>Floor Plan — AL NOOR TOWER</h3>
+          <p style="color: rgba(255,255,255,0.7);">Detailed layout showing apartment configurations, corridors, lifts, and balconies across floors.</p>
+        </div>
+        <img class="proj-map-img" src="Map.jpeg" alt="AL NOOR TOWER Floor Plan" />
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Projects</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('ongoing')">Ongoing</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- WHY US -->
+  <div id="page-why" class="page">
+    <div class="page-hero pt-nav">
+      <div class="page-hero-inner">
+        <div class="eyebrow">The Melkar Difference</div>
+        <h1>Why Choose <em>Us?</em></h1>
+        <p style="color: rgba(255, 255, 255, 0.7);">In a market full of builders, here's what makes Melkar Builders the most trusted name in Panemangalore.</p>
+      </div>
+    </div>
+    <div class="why-reasons reveal">
+      <div>
+        <div class="eyebrow">Our Advantages</div>
+        <h2 class="h2">Reasons to<br />Trust Melkar</h2>
+        <div class="reason-item">
+          <div class="r-num">01</div>
+          <div>
+            <div class="r-title">Uncompromising Quality</div>
+            <p class="r-desc">We use only premium certified materials and follow strict quality control at every stage.
+            </p>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="r-num">02</div>
+          <div>
+            <div class="r-title">On-Time Delivery</div>
+            <p class="r-desc">Our projects are completed within the promised timeline, every single time.</p>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="r-num">03</div>
+          <div>
+            <div class="r-title">Transparent Pricing</div>
+            <p class="r-desc">No hidden costs, no last-minute surprises. Complete financial transparency from day one.
+            </p>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="r-num">04</div>
+          <div>
+            <div class="r-title">Prime Locations</div>
+            <p class="r-desc">Our projects are strategically located with easy access to schools, hospitals, and
+              markets.</p>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="r-num">05</div>
+          <div>
+            <div class="r-title">Experienced Team</div>
+            <p class="r-desc">Architects, engineers, and project managers with decades of combined expertise.</p>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="r-num">06</div>
+          <div>
+            <div class="r-title">After-Sales Support</div>
+            <p class="r-desc">We provide ongoing support for any post-handover concerns.</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-boxes">
+        <div class="why-box">
+          <div class="wb-n">50+</div>
+          <div class="wb-l">Homes Delivered</div>
+        </div>
+        <div class="why-box">
+          <div class="wb-n">10+</div>
+          <div class="wb-l">Years Active</div>
+        </div>
+        <div class="why-box">
+          <div class="wb-n">100%</div>
+          <div class="wb-l">Client Satisfaction</div>
+        </div>
+        <div class="why-box">
+          <div class="wb-n">5★</div>
+          <div class="wb-l">Average Rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="why-testimonials reveal">
+      <div class="eyebrow">What Clients Say</div>
+      <h2 class="h2 light">Real Stories,<br />Real Homes</h2>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Melkar Builders delivered our apartment ahead of schedule and the quality exceeded our
+            expectations. Every detail was perfect."</p>
+          <div class="testi-author">Ahmed Khan</div>
+          <div class="testi-loc">AL NOOR TOWER Resident</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Completely transparent from day one. No hidden charges, regular updates, and a team
+            that genuinely cares about your home."</p>
+          <div class="testi-author">Suresh Shetty</div>
+          <div class="testi-loc">Melkar Residency Resident</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"The best builders in Panemangalore. They turned our dream into reality with
+            craftsmanship we are proud to show our family."</p>
+          <div class="testi-author">Fatima Begum</div>
+          <div class="testi-loc">Panemangalore</div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Pages</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('about')">About</a></li>
+            <li><a onclick="showPage('services')">Services</a></li>
+            <li><a onclick="showPage('enquiry')">Enquire Now</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ENQUIRY -->
+  <div id="page-enquiry" class="page">
+    <div style="padding-top:76px;">
+      <div class="enquiry-layout">
+        <div class="enq-left">
+          <div class="eyebrow">Get In Touch</div>
+          <h2 class="h2 light" style="font-size:2.2rem;">Let's Build Your<br />Dream Together</h2>
+          <p>Have a project in mind? Reach out to our team and we'll get back to you within 24 hours.</p>
+          <div class="enq-contacts">
+            <div class="ec-item">
+              <div class="ec-icon">📞</div>
+              <div>
+                <div class="ec-lbl">Phone</div>
+                <div class="ec-val">+91 7019 636 825</div>
+              </div>
+            </div>
+            <div class="ec-item">
+              <div class="ec-icon">📍</div>
+              <div>
+                <div class="ec-lbl">Address</div>
+                <div class="ec-val">Melkar, Panemangalore, Karnataka</div>
+              </div>
+            </div>
+            <div class="ec-item">
+              <div class="ec-icon">🕐</div>
+              <div>
+                <div class="ec-lbl">Office Hours</div>
+                <div class="ec-val">Monday – Saturday, 9:00 AM – 6:00 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="enq-right">
+          <div class="form-head">Send an Enquiry</div>
+          <div class="form-sub">Fill in the form and our team will contact you shortly.</div>
+          <div class="form-row">
+            <div class="form-group"><label>Full Name *</label><input type="text" placeholder="Your full name"
+                id="fname" /></div>
+            <div class="form-group"><label>Phone Number *</label><input type="tel" placeholder="+91 XXXXX XXXXX"
+                id="fphone" /></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"
+              id="femail" /></div>
+          <div class="form-row">
+            <div class="form-group"><label>Interested In</label><select id="fservice">
+                <option value="">Select a service</option>
+                <option>AL NOOR TOWER – Ongoing</option>
+                <option>Residential Apartment</option>
+                <option>Commercial Space</option>
+                <option>General Enquiry</option>
+              </select></div>
+            <div class="form-group"><label>Budget Range</label><select id="fbudget">
+                <option value="">Select range</option>
+                <option>Below ₹20 Lakhs</option>
+                <option>₹20L – ₹40L</option>
+                <option>₹40L – ₹60L</option>
+                <option>Above ₹60 Lakhs</option>
+              </select></div>
+          </div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your requirements..."
+              id="fmsg"></textarea></div>
+          <button class="btn-submit" onclick="submitForm()">Send Enquiry →</button>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo"><img src="LOGO2.png" alt="Melkar Builders" /></div>
+          <div class="footer-brand-tag">Building a Better Tomorrow</div>
+          <p class="footer-brand-desc">Trusted builders in Panemangalore.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Pages</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('about')">About</a></li>
+            <li><a onclick="showPage('services')">Services</a></li>
+            <li><a onclick="showPage('why')">Why Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <ul class="footer-contact-list">
+            <li class="footer-icon"><span><i class="bi bi-telephone-fill"></i></span>+91 7019 636 825</li>
+            <li class="footer-icon"><span><i class="bi bi-geo-fill"></i></span>Melkar, Panemangalore</li>
+            <li class="footer-icon"><span><i class="bi bi-calendar-fill"></i></span>Mon–Sat: 9AM–6PM</li>
+          </ul>
+        </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2024 Melkar Builders. All Rights Reserved.</div>
+        <div class="footer-copy">Melkar · Panemangalore · Karnataka</div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">✅ Enquiry sent! We'll contact you soon.</div>
+
+  <script>
+    const PAGES = ["home", "about", "services", "ongoing", "why", "enquiry"];
+
+    function showPage(name) {
+      PAGES.forEach(p => { const el = document.getElementById("page-" + p); if (el) el.classList.remove("active"); });
+      const target = document.getElementById("page-" + name);
+      if (target) { target.classList.add("active"); window.scrollTo(0, 0); }
+      document.querySelectorAll(".nav-links > li > a").forEach(a => a.classList.remove("active"));
+      const nid = document.getElementById("nav-" + name);
+      if (nid) nid.classList.add("active");
+      setTimeout(() => {
+        document.querySelectorAll("#page-" + name + " .reveal").forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("visible");
+        });
+      }, 80);
+      // Close mobile menu and reset hamburger icon to 3 lines
+      if (window.innerWidth < 960) {
+        menuOpen = false;
+        const links = document.getElementById("navLinks");
+        const hbars = document.querySelectorAll(".hamburger span");
+        links.style.display = "none";
+        hbars[0].style.cssText = "";
+        hbars[1].style.cssText = "";
+        hbars[2].style.cssText = "";
+      }
+    }
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+
+    // Nav scroll
+    window.addEventListener("scroll", () => {
+      const nav = document.getElementById("navbar");
+      nav.classList.toggle("scrolled", window.scrollY > 60);
+    });
+
+    // Mobile menu
+    let menuOpen = false;
+    function toggleMobileMenu() {
+      menuOpen = !menuOpen;
+      const links = document.getElementById("navLinks");
+      const hbars = document.querySelectorAll(".hamburger span");
+      if (menuOpen) {
+        const navH = document.getElementById('navbar').offsetHeight;
+        links.style.cssText = "display:flex;flex-direction:column;position:fixed;top:" + navH + "px;left:0;right:0;background:rgba(9,18,32,0.98);backdrop-filter:blur(20px);padding:16px 24px 24px;gap:0;border-bottom:1px solid rgba(61,191,138,0.15);z-index:299;overflow-y:auto;max-height:calc(100vh - " + navH + "px);";
+        hbars[0].style.cssText = "transform:rotate(45deg) translate(5px,5px)";
+        hbars[1].style.cssText = "opacity:0";
+        hbars[2].style.cssText = "transform:rotate(-45deg) translate(5px,-5px)";
+      } else {
+        links.style.display = "none";
+        hbars[0].style.cssText = "";
+        hbars[1].style.cssText = "";
+        hbars[2].style.cssText = "";
+      }
+    }
+
+    // Filter chips
+    document.querySelectorAll(".projects-filter-bar").forEach(bar => {
+      bar.querySelectorAll(".filter-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          bar.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+        });
+      });
+    });
+
+    async function submitForm() {
+  const name    = document.getElementById('fname').value.trim();
+  const phone   = document.getElementById('fphone').value.trim();
+  const email   = document.getElementById('femail').value.trim();
+  const service = document.getElementById('fservice').value;
+  const budget  = document.getElementById('fbudget').value;
+  const message = document.getElementById('fmsg').value.trim();
+
+  // Basic validation
+  if (!name || !phone) {
+    alert('Please fill in your name and phone number.');
+    return;
+  }
+
+  // Show loading state on button
+  const btn = document.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    const response = await fetch('http://localhost:3000/enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: name,
+        phone,
+        email,
+        service,
+        budget,
+        message
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Clear the form
+      ['fname','fphone','femail','fservice','fbudget','fmsg']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+
+      // Show success toast
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+    } else {
+      alert('Something went wrong: ' + result.error);
+    }
+
+  } catch (err) {
+    alert('Could not connect to the server. Make sure the backend is running.');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Enquiry →';
+  }
+}
+
+    showPage("home");
+  </script>
+</body>
+
+</html>
